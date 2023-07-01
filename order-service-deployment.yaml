@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-service-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: order-service
+  template:
+    metadata:
+      # We add the annotations below to let Dapr recognize
+      # and deploy the sidecar together with our service in the pod.
+      annotations:
+        dapr.io/enabled: "true"
+        # The client service will use this name to locate
+        # the Order service through the Dapr sidecar.
+        dapr.io/app-id: "order-service"
+        # The port that your application is listening on
+        dapr.io/app-port: "3000"
+      labels:
+        app: order-service
+    spec:
+      containers:
+        - name: order-service
+          image: tphamdev/dapr-example-order-service
+
