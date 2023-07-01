@@ -7,15 +7,19 @@ const { DaprClient, CommunicationProtocolEnum } = require("dapr-client");
 const app = express();
 const port = 3000;
 
-// Our Order service only interacts with Dapr sidecar running in local.
-const daprHost = "127.0.0.1";
+// // Our Order service only interacts with Dapr sidecar running in local.
+// const daprHost = "127.0.0.1";
+
+const daprHost = "http://34.83.117.202"; // Dapr Sidecar Host, could also be https://example.com
+const daprPort = "3500";
 
 // Create a new Dapr client
 const client = new DaprClient(
   daprHost,
-  // The HTTP port that the Dapr sidecar is listening on.
-  // We should use this env var to connect to Dapr sidecar
-  process.env.DAPR_HTTP_PORT,
+  // // The HTTP port that the Dapr sidecar is listening on.
+  // // We should use this env var to connect to Dapr sidecar
+  // process.env.DAPR_HTTP_PORT,
+  daprPort,
   CommunicationProtocolEnum.HTTP
 );
 
